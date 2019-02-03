@@ -10,7 +10,7 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='chinese-converter',
     description='convert simplified chinese text to traditional chinese',
-    version='1.0.1',
+    version='1.0.2',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/zachary822/chinese-converter',

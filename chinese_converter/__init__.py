@@ -2,7 +2,7 @@ import json
 import os
 from collections import Counter, defaultdict, deque
 from operator import itemgetter
-from typing import Any, Deque, Dict, List, Optional
+from typing import Any, Deque, Dict, List, Optional, Tuple
 
 __all__ = ['to_simplified', 'to_traditional']
 
@@ -30,21 +30,24 @@ def default_getter(l, i, default: Optional[Any] = None):
         return default
 
 
-def most_common_word(prev_word: str, choices: List[str], next_word: str) -> str:
-    if prev_word is not None and next_word is not None:
-        choices_max = max(((c, max(bigrams[prev_word + c], bigrams[c + next_word])) for c in choices),
-                          key=itemgetter(1))
-    elif prev_word is None and next_word is not None:
-        choices_max = max(((c, bigrams[c + next_word]) for c in choices), key=itemgetter(1))
-    elif next_word is None and prev_word is not None:
-        choices_max = max(((c, bigrams[prev_word + c]) for c in choices), key=itemgetter(1))
-    else:
-        choices_max = ('', 0)
+def most_common_word(choices: List[str], prev_word: Optional[str] = None, next_word: Optional[str] = None) -> str:
+    bigram_freqs: Deque[Tuple[str, int]] = deque()
 
-    if not choices_max[1]:
-        return max(choices, key=lambda c: monograms[c])
+    if prev_word is not None:
+        bigram_freqs.extend((c, bigrams[prev_word + c]) for c in choices)
 
-    return choices_max[0]
+    if next_word is not None:
+        bigram_freqs.extend((c, bigrams[c + next_word]) for c in choices)
+
+    try:
+        choices_max = max(bigram_freqs, key=itemgetter(1))
+
+        if not choices_max[1]:
+            return max(choices, key=lambda c: monograms[c])
+
+        return choices_max[0]
+    except ValueError:
+        return choices[0]
 
 
 def to_traditional(text: str) -> str:
@@ -61,7 +64,7 @@ def to_traditional(text: str) -> str:
             choices = simp_to_trad[s]
 
             if len(choices) > 1:
-                result.append(most_common_word(default_getter(result, -1), choices, default_getter(text, i + 1)))
+                result.append(most_common_word(choices, default_getter(result, -1), default_getter(text, i + 1)))
             else:
                 result.append(choices[0])
         except KeyError:
