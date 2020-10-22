@@ -8,10 +8,10 @@ __all__ = ['to_simplified', 'to_traditional']
 
 BASE_PATH = os.path.dirname(os.path.realpath(__file__))
 
-with open(os.path.join(BASE_PATH, 'traditional.txt')) as f, open(os.path.join(BASE_PATH, 'simplified.txt')) as g:
+with open(os.path.join(BASE_PATH, 'traditional.txt'), encoding='utf8') as f, open(os.path.join(BASE_PATH, 'simplified.txt'), encoding='utf8') as g:
     traditional, simplified = f.read().strip(), g.read().strip()
 
-with open(os.path.join(BASE_PATH, 'bigram.json')) as f, open(os.path.join(BASE_PATH, 'monogram.json')) as g:
+with open(os.path.join(BASE_PATH, 'bigram.json'), encoding='utf8') as f, open(os.path.join(BASE_PATH, 'monogram.json'), encoding='utf8') as g:
     bigrams, monograms = Counter(json.load(f)), Counter(json.load(g))
 
 simp_to_trad: Dict[str, List[str]] = defaultdict(list)
