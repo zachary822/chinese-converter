@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "chinese-converter"
+version = "1.1.0"
+description = "convert simplified chinese text to traditional chinese"
+authors = ["Zachary Juang <zachary822@me.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "chinese_converter" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
