@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "chinese-converter"
-version = "1.1.0"
+version = "1.1.1"
 description = "convert simplified chinese text to traditional chinese"
 authors = ["Zachary Juang <zachary822@me.com>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/zachary822/chinese-converter"
 packages = [
     { include = "chinese_converter" }
 ]
