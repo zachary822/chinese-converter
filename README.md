@@ -1,3 +1,5 @@
+
+
 # Chinese Converter
 
 Converts between Traditional and Simplified Chinese. Uses monogram and bigram frequencies to pick optimal
@@ -24,7 +26,7 @@ chinese_converter.to_simplified("traditional chinese text...")
 ## Testing
 
 ```bash
-python -m unittest
+pytest
 ```
 
 ## License
